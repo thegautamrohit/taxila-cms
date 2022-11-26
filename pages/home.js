@@ -72,7 +72,7 @@ function home() {
         gridTemplateColumns: "auto auto auto",
         justifyContent: "space-evenly",
         alignItems: "center",
-        margin: "50px auto",
+        margin: "120px auto",
       }}
     >
       {cards?.map((card) => (
