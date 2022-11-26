@@ -44,7 +44,7 @@ function home() {
       id: 6,
       icon: <LiveTvIcon fontSize={"large"} style={{ color: "#1976d2" }} />,
       title: "Media",
-      url: "/home",
+      url: "/media",
     },
 
     {

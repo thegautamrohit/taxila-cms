@@ -17,12 +17,12 @@
 .product__layout__home__left__drawer__content {
   overflow-y: scroll;
   max-height: 100vh;
+  height: 100vh;
 }
 
 .product__layout__home__left__drawer {
   width: 15%;
   border-right: 0.5px solid #ececec;
-  min-height: 100vh;
   max-height: 100vh;
 }
 
