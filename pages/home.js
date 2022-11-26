@@ -11,6 +11,7 @@ import AppsIcon from "@mui/icons-material/Apps";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
+import Link from "next/link";
 
 function home() {
   const cards = [
@@ -24,7 +25,7 @@ function home() {
       id: 2,
       icon: <CategoryIcon fontSize={"large"} style={{ color: "#1976d2" }} />,
       title: "Add Product",
-      url: "/home",
+      url: "/product",
     },
     {
       id: 3,
@@ -75,33 +76,40 @@ function home() {
       }}
     >
       {cards?.map((card) => (
-        <Card
+        <Link
           key={card?.id}
-          sx={{ maxWidth: 345 }}
+          href={card.url}
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            textDecoration: "none",
           }}
         >
-          <CardActionArea>
-            <CardContent
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Typography gutterBottom variant="h5" component="div">
-                {card?.icon}
-              </Typography>
-              <Typography variant="body" color="text.primary">
-                {card?.title}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+          <Card
+            sx={{ maxWidth: 345 }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CardActionArea>
+              <CardContent
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography gutterBottom variant="h5" component="div">
+                  {card?.icon}
+                </Typography>
+                <Typography variant="body" color="text.primary">
+                  {card?.title}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Link>
       ))}
     </div>
   );
