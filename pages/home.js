@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -59,7 +58,7 @@ function home() {
       id: 9,
       icon: <NewspaperIcon fontSize={"large"} style={{ color: "#1976d2" }} />,
       title: "Blogs",
-      url: "/home",
+      url: "/blogs",
     },
   ];
 
