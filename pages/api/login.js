@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 export default async function handler(req, res) {
   try {
     const username = req.body.username;
+    const password = req.body.password;
+
     const user = { name: username };
     const jwtToken = jwt.sign(
       { exp: Math.floor(Date.now() / 1000) + 60 * 60, user },
