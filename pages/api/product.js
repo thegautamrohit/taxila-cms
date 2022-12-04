@@ -3,9 +3,17 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "GET":
       try {
+        const id = req.query.id;
+        let sql = "";
+        if (id) {
+          sql = `
+        SELECT * FROM material LEFT JOIN technicalspecification ON material.id = technicalspecification.material_id LEFT JOIN feature ON material.id = feature.material_id LEFT JOIN application ON material.id = application.material_id WHERE material.id = ${id}`;
+        } else {
+          sql = `
+        SELECT material.id , name FROM material LEFT JOIN technicalspecification ON material.id = technicalspecification.material_id LEFT JOIN feature ON material.id = feature.material_id LEFT JOIN application ON material.id = application.material_id WHERE material.id`;
+        }
         const valueParams = [];
-        const sql = `
-        SELECT id , name FROM material LEFT JOIN technicalspecification ON material.id = technicalspecification.material_id LEFT JOIN feature ON material.id = feature.material_id LEFT JOIN application ON material.id = application.material_id`;
+
         const result = await query({ query: sql, value: valueParams });
         if (result) {
           res.status(200).json({ result: result });
