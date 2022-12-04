@@ -36,7 +36,7 @@ function home() {
       id: 4,
       icon: <AppsIcon fontSize={"large"} style={{ color: "#1976d2" }} />,
       title: "Inspiration",
-      url: "/home",
+      url: "/inspiration",
     },
 
     {
