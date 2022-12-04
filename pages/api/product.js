@@ -5,7 +5,7 @@ export default async function handler(req, res) {
       try {
         const valueParams = [];
         const sql = `
-        SELECT * FROM material LEFT JOIN technicalspecification ON material.id = technicalspecification.material_id LEFT JOIN feature ON material.id = feature.material_id LEFT JOIN application ON material.id = application.material_id`;
+        SELECT id , name FROM material LEFT JOIN technicalspecification ON material.id = technicalspecification.material_id LEFT JOIN feature ON material.id = feature.material_id LEFT JOIN application ON material.id = application.material_id`;
         const result = await query({ query: sql, value: valueParams });
         if (result) {
           res.status(200).json({ result: result });
