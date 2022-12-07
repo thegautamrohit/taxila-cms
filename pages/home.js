@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -16,32 +16,50 @@ function home() {
   const cards = [
     {
       id: 1,
-      icon: <HomeRoundedIcon fontSize={"large"} style={{ color: "#1976d2" }} />,
+      icon: (
+        <HomeRoundedIcon
+          style={{ color: "#1976d2", fontSize: "3.5rem !important" }}
+        />
+      ),
       title: "Home Page",
       url: "/home",
     },
     {
       id: 2,
-      icon: <CategoryIcon fontSize={"large"} style={{ color: "#1976d2" }} />,
+      icon: (
+        <CategoryIcon
+          style={{ color: "#1976d2", fontSize: "3.5rem !important" }}
+        />
+      ),
       title: "Add Product",
       url: "/product",
     },
     {
       id: 3,
-      icon: <CountertopsIcon fontSize={"large"} style={{ color: "#1976d2" }} />,
+      icon: (
+        <CountertopsIcon
+          style={{ color: "#1976d2", fontSize: "3.5rem !important" }}
+        />
+      ),
       title: "Kitchen Section",
       url: "/home",
     },
     {
       id: 4,
-      icon: <AppsIcon fontSize={"large"} style={{ color: "#1976d2" }} />,
+      icon: (
+        <AppsIcon style={{ color: "#1976d2", fontSize: "3.5rem !important" }} />
+      ),
       title: "Inspiration",
       url: "/inspiration",
     },
 
     {
       id: 6,
-      icon: <LiveTvIcon fontSize={"large"} style={{ color: "#1976d2" }} />,
+      icon: (
+        <LiveTvIcon
+          style={{ color: "#1976d2", fontSize: "3.5rem !important" }}
+        />
+      ),
       title: "Media",
       url: "/media",
     },
@@ -49,14 +67,20 @@ function home() {
     {
       id: 8,
       icon: (
-        <CloudDownloadIcon fontSize={"large"} style={{ color: "#1976d2" }} />
+        <CloudDownloadIcon
+          style={{ color: "#1976d2", fontSize: "3.5rem !important" }}
+        />
       ),
       title: "Download",
       url: "/home",
     },
     {
       id: 9,
-      icon: <NewspaperIcon fontSize={"large"} style={{ color: "#1976d2" }} />,
+      icon: (
+        <NewspaperIcon
+          style={{ color: "#1976d2", fontSize: "3.5rem !important" }}
+        />
+      ),
       title: "Blogs",
       url: "/blogs",
     },
@@ -68,7 +92,7 @@ function home() {
         width: "100%",
         display: "grid",
         rowGap: "30px",
-        gridTemplateColumns: "auto auto auto",
+        gridTemplateColumns: "200px 200px 200px",
         justifyContent: "space-evenly",
         alignItems: "center",
         margin: "120px auto",
@@ -83,30 +107,30 @@ function home() {
           }}
         >
           <Card
-            sx={{ maxWidth: 345 }}
+            sx={{ maxWidth: 345, height: 200 }}
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <CardActionArea>
-              <CardContent
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography gutterBottom variant="h5" component="div">
-                  {card?.icon}
-                </Typography>
-                <Typography variant="body" color="text.primary">
-                  {card?.title}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
+            {/* <CardActionArea> */}
+            <CardContent
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Typography gutterBottom variant="h5" component="div">
+                {card?.icon}
+              </Typography>
+              <Typography variant="body" color="text.primary">
+                {card?.title}
+              </Typography>
+            </CardContent>
+            {/* </CardActionArea> */}
           </Card>
         </Link>
       ))}

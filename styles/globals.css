@@ -1,33 +1,55 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .product__layout__home__wrapper {
   display: flex;
   justify-content: space-between;
   margin: 65px 0 0 0;
+  height: 100%;
 }
 
 .product__layout__home__left__drawer__content {
   overflow-y: scroll;
   max-height: 100vh;
-  height: 100vh;
+}
+
+.product__layout__home__left__drawer__content > p {
+  color: black;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.product__layout__home__left__drawer__content > ul > li {
+  padding: 10px;
+  color: #447e9b;
+}
+
+.product__layout__home__left__drawer__content > ul > li:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.product__layout__home__left__drawer__content > ul > li:nth-of-type(2n) {
+  background-color: #f6f6f6;
 }
 
 .product__layout__home__left__drawer {
   width: 15%;
   border-right: 0.5px solid #ececec;
-  max-height: 100vh;
 }
 
 .product__layout__home__right__drawer {
   width: 82%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .details__box__wrapper {

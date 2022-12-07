@@ -3,8 +3,9 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import axios from "axios";
 
-function index() {
+function index({ data }) {
   const [parentClass, setParentClass] = useState("");
   const [category, setCategory] = useState("");
   const [material, setMaterial] = useState("");
@@ -39,84 +40,52 @@ function index() {
   const [metaDescription, setMetaDescription] = useState("");
   const [link, setLink] = useState("");
 
+  const clickHandler = (id) => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_CUSTOM}/api/product?id=${id}`)
+      .then((res) => {
+        // console.log(res.data.result[0]);
+        setAbrasion(res.data.result[0]?.abrasion_strength);
+        setApparent(res.data.result[0]?.apparent_density);
+        setCare(res.data.result[0]?.care_instruction);
+        setChips(res.data.result[0]?.chip);
+        setColor(res.data.result[0]?.color);
+        setCompressive(res.data.result[0]?.compressive_strength);
+        setCounterTops(res.data.result[0]?.countertops);
+        setFinish(res.data.result[0]?.finish);
+        setFirePlace(res.data.result[0]?.fireplace);
+        setFloorings(res.data.result[0]?.floorings);
+        setFrost(res.data.result[0]?.frost);
+        setHardness(res.data.result[0]?.hardness);
+        setHeat(res.data.result[0]?.heat);
+        setLevel(res.data.result[0]?.level);
+        setMetaDescription(res.data.result[0]?.meta_description);
+        setMaterial(res.data.result[0]?.name);
+        setPorosity(res.data.result[0]?.open_porosity);
+        setCountry(res.data.result[0]?.origin_country);
+        setOutdoor(res.data.result[0]?.outdoor);
+        setPetrographic(res.data.result[0]?.petrographic_denomination);
+        setScratch(res.data.result[0]?.scratch);
+        setShower(res.data.result[0]?.shower);
+        setSlug(res.data.result[0]?.slug);
+        setStain(res.data.result[0]?.stain);
+        setWalls(res.data.result[0]?.walls);
+        setWater(res.data.result[0]?.water);
+        setWaterAbsorption(res.data.result[0]?.water_absorption);
+      });
+  };
+
   return (
     <div className="product__layout__home__wrapper">
       <div className="product__layout__home__left__drawer">
         <div className="product__layout__home__left__drawer__content">
+          <p>Select an item to edit</p>
           <ul>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
+            {data?.map((d) => (
+              <li onClick={() => clickHandler(d?.id)} key={d?.id}>
+                {d?.name}
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -491,3 +460,15 @@ function index() {
 }
 
 export default index;
+
+export async function getServerSideProps(context) {
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_CUSTOM}/api/product`
+  );
+
+  return {
+    props: {
+      data: data.result,
+    },
+  };
+}
