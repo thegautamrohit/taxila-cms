@@ -3,14 +3,17 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import axios from "axios";
 
-function index() {
+function index({ data }) {
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
   const [website, setWebsite] = useState("");
   const [date, setDate] = useState("");
   const [edition, setEdition] = useState("");
   const [link, setLink] = useState("");
+
+  console.log(data);
 
   return (
     <div className="product__layout__home__wrapper">
@@ -120,3 +123,15 @@ function index() {
 }
 
 export default index;
+
+export async function getServerSideProps(context) {
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_CUSTOM}/api/media`
+  );
+
+  return {
+    props: {
+      data: data.result,
+    },
+  };
+}
