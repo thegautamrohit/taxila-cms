@@ -10,6 +10,7 @@ import AppsIcon from "@mui/icons-material/Apps";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
+import VideoCameraFrontIcon from "@mui/icons-material/VideoCameraFront";
 import Link from "next/link";
 
 function home() {
@@ -83,6 +84,16 @@ function home() {
       ),
       title: "Blogs",
       url: "/blogs",
+    },
+    {
+      id: 9,
+      icon: (
+        <VideoCameraFrontIcon
+          style={{ color: "#1976d2", fontSize: "3.5rem !important" }}
+        />
+      ),
+      title: "Videos",
+      url: "/video",
     },
   ];
 
