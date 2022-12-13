@@ -24,12 +24,12 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        const { category, link } = req.body;
+        const { category, link, title, company } = req.body;
 
         const sql = `
-        INSERT into taxilaVideo(category,link) values (?,?)`;
+        INSERT into taxilaVideo(category,link,title,company) values (?,?,?,?)`;
 
-        const valueParams = [category, link];
+        const valueParams = [category, link, title, company];
 
         const result = await query({ query: sql, value: valueParams });
         if (result) {
@@ -56,15 +56,15 @@ export default async function handler(req, res) {
       break;
     case "PATCH":
       try {
-        const { category, link } = req.body;
+        const { category, link , title , company } = req.body;
         const id = req.query.id;
         let videoId = `SELECT * FROM taxilaVideo WHERE id = ${id}`;
 
         const findId = await query({ query: videoId });
 
         if (findId.length > 0) {
-          const valueParams = [category, link];
-          const sql = `UPDATE taxilaVideo SET category=? ,link=? WHERE id = ${id}`;
+          const valueParams = [category, link , title , company];
+          const sql = `UPDATE taxilaVideo SET category=? ,link=? ,title=? ,company=? WHERE id = ${id}`;
           const result = await query({ query: sql, value: valueParams });
 
           if (result?.affectedRows > 0) {

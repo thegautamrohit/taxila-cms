@@ -24,12 +24,12 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        const { date, category, link } = req.body;
+        const { date, category, link, images, website, edition } = req.body;
 
         const sql = `
-        INSERT into media(date,category,link) values (?,?,?)`;
+        INSERT into media(date,category,link,images,website,edition) values (?,?,?,?,?,?)`;
 
-        const valueParams = [date, category, link];
+        const valueParams = [date, category, link, images, website, edition];
 
         const result = await query({ query: sql, value: valueParams });
         if (result) {
@@ -56,15 +56,15 @@ export default async function handler(req, res) {
       break;
     case "PATCH":
       try {
-        const { date, category, link } = req.body;
+        const { date, category, link, images, website, edition } = req.body;
         const id = req.query.id;
         let videoId = `SELECT * FROM media WHERE id = ${id}`;
 
         const findId = await query({ query: videoId });
 
         if (findId.length > 0) {
-          const valueParams = [date, category, link];
-          const sql = `UPDATE media SET date=? ,category=? ,link=? WHERE id = ${id}`;
+          const valueParams = [date, category, link, images, website, edition];
+          const sql = `UPDATE media SET date=? ,category=? ,link=? ,images=? ,website=? ,edition=? WHERE id = ${id}`;
           const result = await query({ query: sql, value: valueParams });
 
           if (result?.affectedRows > 0) {
