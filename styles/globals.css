@@ -18,6 +18,9 @@
 .product__layout__home__left__drawer__content {
   overflow-y: scroll;
   max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0 0 0;
 }
 
 .product__layout__home__left__drawer__content > p {
@@ -26,17 +29,17 @@
   padding: 10px;
 }
 
-.product__layout__home__left__drawer__content > ul > li {
+.product__layout__home__left__drawer__content > a {
   padding: 10px;
   color: #447e9b;
 }
 
-.product__layout__home__left__drawer__content > ul > li:hover {
+.product__layout__home__left__drawer__content > a:hover {
   text-decoration: underline;
   cursor: pointer;
 }
 
-.product__layout__home__left__drawer__content > ul > li:nth-of-type(2n) {
+.product__layout__home__left__drawer__content > a:nth-of-type(2n) {
   background-color: #f6f6f6;
 }
 
