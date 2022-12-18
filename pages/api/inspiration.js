@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
         if (category) {
           sql = `
-          SELECT * FROM inspirationData LEFT JOIN inspirationDetails ON inspirationData.detail_id = inspirationDetails.id`;
+          SELECT * FROM inspirationData LEFT JOIN inspirationDetails ON inspirationData.detail_id = inspirationDetails.id WHERE category_id = ${category}`;
         } else {
           sql = `
           SELECT * FROM inspirationData LEFT JOIN inspirationDetails ON inspirationData.detail_id = inspirationDetails.id`;
@@ -72,8 +72,14 @@ export default async function handler(req, res) {
       break;
     case "PATCH":
       try {
-        const { primary_image, category_id, title, description, image , detail_id } =
-          req.body;
+        const {
+          primary_image,
+          category_id,
+          title,
+          description,
+          image,
+          detail_id,
+        } = req.body;
         const id = req.query.id;
         let Item_Id = `SELECT * FROM inspirationData WHERE id = ${id}`;
 
