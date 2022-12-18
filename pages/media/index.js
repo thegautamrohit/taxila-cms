@@ -102,6 +102,20 @@ function index({ data }) {
       preview.trim().length
     ) {
       if (id) {
+        axios
+          .patch(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media?id=${id}`, {
+            category,
+            website,
+            date,
+            edition,
+            link,
+            images: preview,
+          })
+          .then((res) => {
+            setError(false);
+            setOpen(true);
+            router.push("/media");
+          });
       } else {
         axios
           .post(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media`, {
