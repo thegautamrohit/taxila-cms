@@ -43,7 +43,7 @@ function index({ data }) {
       setCategory("");
       setLink("");
       setTitle("");
-      setLoading("");
+      setLoading(false);
       // });
     }
   };
@@ -97,7 +97,6 @@ function index({ data }) {
   };
 
   const deleteHandler = () => {
-    console.log(id);
     axios
       .delete(`${process.env.NEXT_PUBLIC_CUSTOM}/api/video?id=${id}`)
       .then((res) => router.push("/video"));
