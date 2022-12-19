@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
         if (category) {
           sql = `
-          SELECT * FROM inspirationData LEFT JOIN inspirationDetails ON inspirationData.detail_id = inspirationDetails.id`;
+          SELECT * FROM inspirationData LEFT JOIN inspirationDetails ON inspirationData.detail_id = inspirationDetails.id WHERE category_id = ${category}`;
         } else {
           sql = `
           SELECT * FROM inspirationData LEFT JOIN inspirationDetails ON inspirationData.detail_id = inspirationDetails.id`;
@@ -72,8 +72,14 @@ export default async function handler(req, res) {
       break;
     case "PATCH":
       try {
-        const { primary_image, category_id, title, description, image , detail_id } =
-          req.body;
+        const {
+          primary_image,
+          category_id,
+          title,
+          description,
+          image,
+          detail_id,
+        } = req.body;
         const id = req.query.id;
         let Item_Id = `SELECT * FROM inspirationData WHERE id = ${id}`;
 
@@ -81,19 +87,24 @@ export default async function handler(req, res) {
 
         if (findId.length > 0) {
           const valueParams = [primary_image, category_id, title, description];
-          const sql = `UPDATE inspirationData SET primary_image=? ,category_id=? ,title=?  WHERE id = ${id}`;
-          const sqlDetail = `UPDATE inspirationData SET primary_image=? ,category_id=? ,title=?  WHERE id = ${id}`;
+          const valueParamsDetails = [title, image];
+          const sql = `UPDATE inspirationData SET primary_image=? ,category_id=? ,title=? ,description=?  WHERE id = ${id}`;
+          const sqlDetail = `UPDATE inspirationDetails SET title=? ,image=? WHERE id = ${detail_id}`;
           const result = await query({ query: sql, value: valueParams });
+          const resultDetail = await query({
+            query: sqlDetail,
+            value: valueParamsDetails,
+          });
 
-          if (result?.affectedRows > 0) {
+          if (result?.affectedRows > 0 && resultDetail?.affectedRows) {
             res.status(200).json({
-              message: "Kitchen Item Updated Successfully",
+              message: "Inspiration data Updated Successfully",
               count: 20,
               next: "",
               result: result,
             });
           } else {
-            res.status(400).json({ result: "Kitchen Item not found" });
+            res.status(400).json({ result: "Inspiration data not found" });
           }
         }
       } catch (error) {

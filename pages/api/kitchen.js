@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
         if (type === "kitchenCategory" && !id) {
           sql = `
-          SELECT * FROM kitchencategory`;
+          SELECT * FROM kitchenDetails`;
         }
         if (type === "kitchenCategory" && id) {
           sql = `
