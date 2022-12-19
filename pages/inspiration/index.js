@@ -3,13 +3,16 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import axios from "axios";
 
-function index() {
+function index({ data }) {
   const [mainImage, setMainImage] = useState();
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [miniTile, setMiniTile] = useState("");
+
+  console.log(data);
 
   return (
     <div className="product__layout__home__wrapper">
@@ -84,3 +87,15 @@ function index() {
 }
 
 export default index;
+
+export async function getServerSideProps(context) {
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_CUSTOM}/api/inspirationCategory`
+  );
+
+  return {
+    props: {
+      data: data.result,
+    },
+  };
+}

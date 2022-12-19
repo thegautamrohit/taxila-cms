@@ -39,12 +39,10 @@ function index({ data }) {
           setLoading(false);
         });
     } else {
-      // axios.get(`${process.env.NEXT_PUBLIC_CUSTOM}/api/video`).then((res) => {
       setCategory("");
       setLink("");
       setTitle("");
       setLoading(false);
-      // });
     }
   };
 

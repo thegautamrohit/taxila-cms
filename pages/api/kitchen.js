@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         const type = req.query?.type;
         const id = req.query?.id;
 
-        if (type === "kitchenCategory" && id) {
+        if (type === "kitchenCategory" && !id) {
           sql = `
           SELECT * FROM kitchencategory`;
         }

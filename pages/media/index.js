@@ -38,8 +38,6 @@ function index({ data }) {
     };
   };
 
-  console.log(image);
-
   const clickHandler = () => {
     if (router.query.id) {
       axios
