@@ -4,9 +4,14 @@ export default async function handler(req, res) {
     case "GET":
       try {
         let sql = "";
-
-        sql = `
+        const id = req.query.id;
+        if (id) {
+          sql = `
+          SELECT * FROM inspirationCategory WHERE id = ${id}`;
+        } else {
+          sql = `
           SELECT * FROM inspirationCategory`;
+        }
 
         const valueParams = [];
 
