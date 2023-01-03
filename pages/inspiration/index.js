@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import axios from "axios";
 
-function index() {
+function Index({ data }) {
   const [mainImage, setMainImage] = useState();
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [miniTile, setMiniTile] = useState("");
 
+  useEffect(() => {}, []);
+
+  console.log(data);
+
   return (
     <div className="product__layout__home__wrapper">
-      <div className="product__layout__home__left__drawer"></div>
+      <div className="product__layout__home__left__drawer">
+        <div className="product__layout__home__left__drawer__item">
+          <h2>All Categories</h2>
+          {data.map((item, index) => (
+            <p key={index}>{item.title}</p>
+          ))}
+        </div>
+      </div>
       <div className="product__layout__home__right__drawer">
         <div className="product__layout__home__left__drawer__content">
           <h2>Add Details</h2>
@@ -83,4 +95,16 @@ function index() {
   );
 }
 
-export default index;
+export default Index;
+
+export async function getServerSideProps(context) {
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_CUSTOM}/api/inspirationCategory`
+  );
+
+  return {
+    props: {
+      data: data.result,
+    },
+  };
+}

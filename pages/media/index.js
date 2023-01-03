@@ -11,7 +11,7 @@ import Alert from "../../components/Common/Alert";
 import Image from "next/image";
 // import imageToBase64 from "image-to-base64";
 
-function index({ data }) {
+function Index({ data }) {
   const [image, setImage] = useState();
   const [category, setCategory] = useState("");
   const [website, setWebsite] = useState("");
@@ -285,7 +285,7 @@ function index({ data }) {
   );
 }
 
-export default index;
+export default Index;
 
 export async function getServerSideProps(context) {
   const { data } = await axios.get(

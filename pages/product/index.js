@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import axios from "axios";
 
-function index({ data }) {
+function Index({ data }) {
   const [parentClass, setParentClass] = useState("");
   const [category, setCategory] = useState("");
   const [material, setMaterial] = useState("");
@@ -459,7 +459,7 @@ function index({ data }) {
   );
 }
 
-export default index;
+export default Index;
 
 export async function getServerSideProps(context) {
   const { data } = await axios.get(

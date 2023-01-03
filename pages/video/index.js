@@ -12,7 +12,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function index({ data }) {
+function Index({ data }) {
   const [category, setCategory] = useState("");
   const [link, setLink] = useState("");
   const [title, setTitle] = useState("");
@@ -213,7 +213,7 @@ function index({ data }) {
   );
 }
 
-export default index;
+export default Index;
 
 export async function getServerSideProps(context) {
   const { data } = await axios.get(
