@@ -1,88 +1,80 @@
 import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
 import axios from "axios";
+import InspirationCategory from "../../components/Inspiration/InspirationCategory";
+import InspirationProduct from "../../components/Inspiration/InspirationProduct";
 
-function index({ data }) {
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+function index({ data, categoryData }) {
   const [mainImage, setMainImage] = useState();
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [miniTile, setMiniTile] = useState("");
+  const [value, setValue] = useState(0);
 
-  console.log(data);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
-    <div className="product__layout__home__wrapper">
-      <div className="product__layout__home__left__drawer"></div>
-      <div className="product__layout__home__right__drawer">
-        <div className="product__layout__home__left__drawer__content">
-          <h2>Add Details</h2>
-
-          <div className="details__box__wrapper">
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="outlined-multiline-flexible"
-                label="Category"
-                multiline
-                maxRows={4}
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              />
-              <TextField
-                id="outlined-multiline-flexible"
-                label="Title"
-                multiline
-                maxRows={4}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <TextField
-                id="outlined-multiline-flexible"
-                label="Description"
-                multiline
-                maxRows={4}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </Box>
-            <Divider />
-
-            <div className="details__box__wrapper">
-              <h4>Images</h4>
-
-              <Box
-                component="form"
-                sx={{
-                  "& > :not(style)": { m: 1, width: "25ch" },
-                }}
-                noValidate
-                autoComplete="off"
-              >
-                <Button variant="contained" component="label">
-                  Main Image
-                  <input
-                    type="file"
-                    hidden
-                    value={mainImage}
-                    onChange={(e) => setMainImage(e.target)}
-                  />
-                </Button>
-              </Box>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <Box sx={{ width: "100%", marginTop: "75px" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            centered
+          >
+            <Tab label="Category" {...a11yProps(0)} />
+            <Tab label="Product" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <InspirationCategory data={categoryData} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <InspirationProduct data={data} categoryData={categoryData} />
+        </TabPanel>
+      </Box>
+    </>
   );
 }
 
@@ -90,12 +82,17 @@ export default index;
 
 export async function getServerSideProps(context) {
   const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_CUSTOM}/api/inspiration`
+  );
+
+  let category = await axios.get(
     `${process.env.NEXT_PUBLIC_CUSTOM}/api/inspirationCategory`
   );
 
   return {
     props: {
       data: data.result,
+      categoryData: category.data.result,
     },
   };
 }

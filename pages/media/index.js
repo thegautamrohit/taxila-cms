@@ -178,7 +178,6 @@ function index({ data }) {
                     <input
                       type="file"
                       hidden
-                      value={image}
                       onChange={(e) => convertToBase64(e)}
                     />
                   </Button>

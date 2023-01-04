@@ -16,8 +16,8 @@
 }
 
 .product__layout__home__left__drawer__content {
-  overflow-y: scroll;
-  max-height: 100vh;
+  /* overflow-y: scroll; */
+  /* max-height: 100vh; */
   display: flex;
   flex-direction: column;
   padding: 50px 0 0 0;
