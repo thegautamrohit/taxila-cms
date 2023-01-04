@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import Alert from "../../components/Common/Alert";
 import Snackbar from "@mui/material/Snackbar";
 
-function index({ data }) {
+function Index({ data }) {
   const [parentClass, setParentClass] = useState("");
   const [category, setCategory] = useState("");
   const [material, setMaterial] = useState("");
@@ -578,7 +578,7 @@ function index({ data }) {
   );
 }
 
-export default index;
+export default Index;
 
 export async function getServerSideProps(context) {
   const { data } = await axios.get(

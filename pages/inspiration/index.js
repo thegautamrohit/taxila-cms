@@ -53,6 +53,10 @@ function index({ data, categoryData }) {
     setValue(newValue);
   };
 
+  useEffect(() => {}, []);
+
+  console.log(data);
+
   return (
     <>
       <Box sx={{ width: "100%", marginTop: "75px" }}>
