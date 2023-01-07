@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import InspirationCategory from "../../components/Inspiration/InspirationCategory";
 import InspirationProduct from "../../components/Inspiration/InspirationProduct";
-
+import DrawerLeft from "../../components/Inspiration/leftDrawer";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -41,7 +41,7 @@ function a11yProps(index) {
   };
 }
 
-function index({ data, categoryData }) {
+function Index({ data, categoryData }) {
   const [mainImage, setMainImage] = useState();
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
@@ -53,14 +53,11 @@ function index({ data, categoryData }) {
     setValue(newValue);
   };
 
-  useEffect(() => {}, []);
-
-  console.log(data);
-
   return (
     <>
+      <DrawerLeft data={categoryData} />
       <Box sx={{ width: "100%", marginTop: "75px" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        {/* <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -70,19 +67,19 @@ function index({ data, categoryData }) {
             <Tab label="Category" {...a11yProps(0)} />
             <Tab label="Product" {...a11yProps(1)} />
           </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
+        </Box> */}
+        {/* <TabPanel value={value} index={0}>
           <InspirationCategory data={categoryData} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
+        </TabPanel> */}
+        {/* <TabPanel value={value} index={1}>
           <InspirationProduct data={data} categoryData={categoryData} />
-        </TabPanel>
+        </TabPanel> */}
       </Box>
     </>
   );
 }
 
-export default index;
+export default Index;
 
 export async function getServerSideProps(context) {
   const { data } = await axios.get(
