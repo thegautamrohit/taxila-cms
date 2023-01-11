@@ -55,7 +55,7 @@ function Index({ data, categoryData }) {
 
   return (
     <>
-      <DrawerLeft data={categoryData} />
+      <DrawerLeft />
       <Box sx={{ width: "100%", marginTop: "75px" }}>
         {/* <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
@@ -81,19 +81,19 @@ function Index({ data, categoryData }) {
 
 export default Index;
 
-export async function getServerSideProps(context) {
-  const { data } = await axios.get(
-    `${process.env.NEXT_PUBLIC_CUSTOM}/api/inspiration`
-  );
+// export async function getServerSideProps(context) {
+//   const { data } = await axios.get(
+//     `${process.env.NEXT_PUBLIC_CUSTOM}/api/inspiration`
+//   );
 
-  let category = await axios.get(
-    `${process.env.NEXT_PUBLIC_CUSTOM}/api/inspirationCategory`
-  );
+//   let category = await axios.get(
+//     `${process.env.NEXT_PUBLIC_CUSTOM}/api/inspirationCategory`
+//   );
 
-  return {
-    props: {
-      data: data.result,
-      categoryData: category.data.result,
-    },
-  };
-}
+//   return {
+//     props: {
+//       data: data.result,
+//       categoryData: category.data.result,
+//     },
+//   };
+// }

@@ -1,22 +1,11 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import { inspirationSlice } from "./inspirationSlice";
-import { createWrapper } from "next-redux-wrapper";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-const makeStore = () =>
-  configureStore({
-    reducer: {
-      [inspirationSlice.name]: inspirationSlice.reducer,
-    },
-    devTools: true,
-  });
+import inspirationSlice from "./inspirationSlice";
 
-export type AppStore = ReturnType<typeof makeStore>;
-export type AppState = ReturnType<AppStore["getState"]>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  AppState,
-  unknown,
-  Action
->;
+const rootReducer = combineReducers({
+  inspirationSlice:inspirationSlice,
+});
 
-export const wrapper = createWrapper<AppStore>(makeStore);
+export const store = configureStore({
+  reducer: rootReducer,
+});
