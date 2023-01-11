@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         SELECT * FROM media WHERE media.id = ${id}`;
         } else {
           sql = `
-        SELECT * FROM media`;
+        SELECT category FROM media`;
         }
         const valueParams = [];
 

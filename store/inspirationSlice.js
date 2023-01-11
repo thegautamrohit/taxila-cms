@@ -15,16 +15,14 @@ export const fetchCategory = createAsyncThunk(
   }
 );
 
-export const inspirationSlice = createSlice({
+const inspirationSlice = createSlice({
   name: "fetchCategory",
   initialState,
-  reducers: {
-    extraReducers: (builder) => {
-      builder.addCase(fetchCategory.fulfilled, (state, action) => {
-        console.log(action, state);
-        state.category = action.payload;
-      });
-    },
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchCategory.fulfilled, (state, action) => {
+      state.category = action.payload;
+    });
   },
 });
 
