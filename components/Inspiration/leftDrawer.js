@@ -74,7 +74,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function DrawerLeft() {
-  const authState = useSelector((state) => state);
+  const category = useSelector((state) => state);
   const dispatch = useDispatch();
   React.useEffect(() => {
     console.log("DrawerLeft");
@@ -98,7 +98,7 @@ export default function DrawerLeft() {
     setOpen(false);
   };
 
-  console.log(authState);
+  console.log(category.inspirationSLice.category);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -161,7 +161,7 @@ export default function DrawerLeft() {
           </ListItemButton>
           <Collapse in={openCategory} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              {data.map((text, index) => (
+              {category.inspirationSLice.category?.map((text, index) => (
                 <Link
                   key={text.id}
                   href={`/inspiration/${text.title}?id=${text.id}`}
