@@ -1,27 +1,47 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  total_balance: {},
-  coupons: {},
-  totalEarned: {},
+  categories: [],
+  items: [
+    {
+      id: 1,
+      title: "test1",
+    },
+    {
+      id: 2,
+      title: "test2",
+    },
+  ],
   loading: false,
-  passbook: {},
 };
 
 export const getMediaCategory = createAsyncThunk(
-  "getReferralPoints",
+  "getMediaCategory",
 
   async (data, thunkAPI) => {
-    const config = {
-      headers: {
-        Authorization: `Token ${data}`,
-      },
-    };
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_CUSTOM}coupon/referral-current-balance/`,
-      config
-    );
+    const response = await fetch(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media`);
 
     return await response.json();
   }
 );
+
+export const getItems = createAsyncThunk("getItems", async (data, thunkAPI) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media`);
+
+  return await response.json();
+});
+
+const mediaSlice = createSlice({
+  name: "mediaSlice",
+  initialState,
+  extraReducers: (builder) => {
+    builder.addCase(getMediaCategory.fulfilled, (state, action) => {
+      state.categories = action.payload;
+    });
+    addCase(getItems.fulfilled, (state, action) => {
+      state.items = action.payload;
+    });
+  },
+});
+
+export default mediaSlice.reducer;
