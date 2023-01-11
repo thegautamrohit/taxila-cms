@@ -25,7 +25,10 @@ import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
 import Table from "../Inspiration/table";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategory } from "../../store/inspirationSlice";
+import {
+  fetchCategory,
+  fetchCategorySpecificData,
+} from "../../store/inspirationSlice";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -139,12 +142,12 @@ export default function DrawerLeft() {
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
+        <DrawerHeader style={{ background: "#1976d2" }}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
+              <ChevronLeftIcon style={{ color: "white" }} />
             ) : (
-              <ChevronRightIcon />
+              <ChevronRightIcon style={{ color: "white" }} />
             )}
           </IconButton>
         </DrawerHeader>
@@ -160,20 +163,18 @@ export default function DrawerLeft() {
           <Collapse in={openCategory} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {category?.map((text, index) => (
-                <Link
-                  key={text.id}
-                  href={`/inspiration/${text.title}?id=${text.id}`}
-                  style={{ color: "Black", textDecoration: "none" }}
+                <ListItem
+                  disablePadding
+                  key={index}
+                  onClick={() => dispatch(fetchCategorySpecificData(text.id))}
                 >
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <CircleIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={text.title} />
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <CircleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={text.title} />
+                  </ListItemButton>
+                </ListItem>
               ))}
             </List>
           </Collapse>

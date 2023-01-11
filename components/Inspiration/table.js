@@ -12,8 +12,10 @@ import {
   fetchCategoryData,
   deleteCategoryData,
 } from "../../store/inspirationSlice";
+import ImageIcon from "@mui/icons-material/Image";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import DeleteIcon from "@mui/icons-material/Delete";
+import BurstModeIcon from "@mui/icons-material/BurstMode";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#1976d2",
@@ -80,15 +82,18 @@ export default function CustomizedTables() {
                 {row.description}
               </StyledTableCell>
               <StyledTableCell align="center">
-                {row.primary_image}
+                <ImageIcon style={{ cursor: "pointer" }} />
               </StyledTableCell>
-              <StyledTableCell align="center">{row.image}</StyledTableCell>
               <StyledTableCell align="center">
-                <UpgradeIcon />
+                <BurstModeIcon style={{ cursor: "pointer" }} />
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <UpgradeIcon style={{ cursor: "pointer" }} />
               </StyledTableCell>
               <StyledTableCell align="center">
                 <DeleteIcon
                   onClick={() => dispatch(deleteCategoryData(row.id))}
+                  style={{ cursor: "pointer" }}
                 />
               </StyledTableCell>
             </StyledTableRow>

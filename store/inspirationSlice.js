@@ -25,6 +25,14 @@ export const fetchCategoryData = createAsyncThunk(
     return await response.data.result;
   }
 );
+export const fetchCategorySpecificData = createAsyncThunk(
+  "fetchCategorySpecificData",
+  async (id, thunkApi) => {
+    const response = await axios(`/api/inspiration?category=${id}`);
+
+    return await response.data.result;
+  }
+);
 
 export const deleteCategoryData = createAsyncThunk(
   "deleteCategoryData",
@@ -49,6 +57,9 @@ const inspirationSlice = createSlice({
         state.category = action.payload;
       })
       .addCase(fetchCategoryData.fulfilled, (state, action) => {
+        state.categoryData = action.payload;
+      })
+      .addCase(fetchCategorySpecificData.fulfilled, (state, action) => {
         state.categoryData = action.payload;
       })
       .addCase(deleteCategoryData.fulfilled, (state, action) => {
