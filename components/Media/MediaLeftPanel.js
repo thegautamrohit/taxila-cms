@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -23,8 +23,9 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import CategoryIcon from "@mui/icons-material/Category";
 import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
-import { selectAuthState, setAuthState } from "../../store/inspirationSlice";
 import { useDispatch, useSelector } from "react-redux";
+import FloatingActionButtons from "../Common/FloatingBUtton";
+
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -72,23 +73,17 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export default function DrawerLeft() {
-  const authState = useSelector(selectAuthState);
-  const dispatch = useDispatch();
-  React.useEffect(() => {
-    const apiCall = async () => {
-      let category = await axios.get(`/api/inspirationCategory`);
-
-      console.log(category);
-    };
-
-    apiCall();
-  }, []);
-
+function MediaLeftPanel() {
   const theme = useTheme();
   const [data, setData] = useState([]);
-  const [open, setOpen] = React.useState(false);
-  const [openCategory, setOpenCategory] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [openCategory, setOpenCategory] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media`)
+      .then((res) => setData(res.data.result));
+  }, []);
 
   const handleClick = () => {
     setOpenCategory(!openCategory);
@@ -105,70 +100,71 @@ export default function DrawerLeft() {
   console.log(data);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        open={open}
-        style={{ width: 300, left: 0, boxShadow: "none" }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            <Link
-              href="/home"
-              style={{ color: "white", textDecoration: "none" }}
+    <div>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          open={open}
+          style={{ width: 300, left: 0, boxShadow: "none" }}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{ mr: 2, ...(open && { display: "none" }) }}
             >
-              Taxila CMS
-            </Link>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              <Link
+                href="/home"
+                style={{ color: "white", textDecoration: "none" }}
+              >
+                Taxila CMS
+              </Link>
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          sx={{
             width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          <ListItemButton onClick={handleClick}>
-            <ListItemIcon>
-              <CategoryIcon />
-            </ListItemIcon>
-            <ListItemText primary="All Category" />
-            {openCategory ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={openCategory} timeout="auto" unmountOnExit>
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "ltr" ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            <ListItemButton onClick={handleClick}>
+              <ListItemIcon>
+                <CategoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="All Categories" />
+              {/* {openCategory ? <ExpandLess /> : <ExpandMore />} */}
+            </ListItemButton>
+            {/* <Collapse in={openCategory} timeout="auto" unmountOnExit> */}
             <List component="div" disablePadding>
               {data.map((text, index) => (
                 <Link
                   key={text.id}
-                  href={`/inspiration/${text.title}?id=${text.id}`}
+                  href={`/media/${text.title}?id=${text.id}`}
                   style={{ color: "Black", textDecoration: "none" }}
                 >
                   <ListItem disablePadding>
@@ -176,19 +172,23 @@ export default function DrawerLeft() {
                       <ListItemIcon>
                         <CircleIcon />
                       </ListItemIcon>
-                      <ListItemText primary={text.title} />
+                      <ListItemText primary={text.link} />
                     </ListItemButton>
                   </ListItem>
                 </Link>
               ))}
             </List>
-          </Collapse>
-        </List>
-        <Divider />
-      </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-      </Main>
-    </Box>
+            {/* </Collapse> */}
+          </List>
+          <Divider />
+          <FloatingActionButtons />
+        </Drawer>
+        <Main open={open}>
+          <DrawerHeader />
+        </Main>
+      </Box>
+    </div>
   );
 }
+
+export default MediaLeftPanel;
