@@ -23,7 +23,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import CategoryIcon from "@mui/icons-material/Category";
 import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
-
+import Table from "../Inspiration/table";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from "../../store/inspirationSlice";
 const drawerWidth = 240;
@@ -74,7 +74,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function DrawerLeft() {
-  const category = useSelector((state) => state);
+  const category = useSelector((state) => state.inspirationSlice.category);
   const dispatch = useDispatch();
   React.useEffect(() => {
     console.log("DrawerLeft");
@@ -84,7 +84,7 @@ export default function DrawerLeft() {
   const theme = useTheme();
   const [data, setData] = React.useState([]);
   const [open, setOpen] = React.useState(false);
-  const [openCategory, setOpenCategory] = React.useState(false);
+  const [openCategory, setOpenCategory] = React.useState(true);
 
   const handleClick = () => {
     setOpenCategory(!openCategory);
@@ -98,7 +98,7 @@ export default function DrawerLeft() {
     setOpen(false);
   };
 
-  console.log(category?.inspirationSLice?.category);
+  console.log(category);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -161,7 +161,7 @@ export default function DrawerLeft() {
           </ListItemButton>
           <Collapse in={openCategory} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              {/* {category.inspirationSLice.category?.map((text, index) => (
+              {category?.map((text, index) => (
                 <Link
                   key={text.id}
                   href={`/inspiration/${text.title}?id=${text.id}`}
@@ -176,7 +176,7 @@ export default function DrawerLeft() {
                     </ListItemButton>
                   </ListItem>
                 </Link>
-              ))} */}
+              ))}
             </List>
           </Collapse>
         </List>
@@ -184,6 +184,7 @@ export default function DrawerLeft() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
+        <Table />
       </Main>
     </Box>
   );
