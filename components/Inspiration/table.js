@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,7 +7,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchCategoryData,
+  deleteCategoryData,
+} from "../../store/inspirationSlice";
+import UpgradeIcon from "@mui/icons-material/Upgrade";
+import DeleteIcon from "@mui/icons-material/Delete";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#1976d2",
@@ -41,28 +47,48 @@ const rows = [
 ];
 
 export default function CustomizedTables() {
+  const dispatch = useDispatch();
+  const categoryData = useSelector(
+    (state) => state.inspirationSlice.categoryData
+  );
+  useEffect(() => {
+    dispatch(fetchCategoryData());
+  }, []);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Id</StyledTableCell>
-            <StyledTableCell align="right">Category</StyledTableCell>
-            <StyledTableCell align="right">Title</StyledTableCell>
-            <StyledTableCell align="right">Description</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell align="center">Title</StyledTableCell>
+            <StyledTableCell align="center">Description</StyledTableCell>
+            <StyledTableCell align="center">Primary Image</StyledTableCell>
+            <StyledTableCell align="center">Image Collection</StyledTableCell>
+            <StyledTableCell align="center">Update</StyledTableCell>
+            <StyledTableCell align="center">Delete</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {categoryData?.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="center">{row.title}</StyledTableCell>
+              <StyledTableCell align="center">
+                {row.description}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {row.primary_image}
+              </StyledTableCell>
+              <StyledTableCell align="center">{row.image}</StyledTableCell>
+              <StyledTableCell align="center">
+                <UpgradeIcon />
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <DeleteIcon onClick={() => deleteCategoryData(row.id)} />
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

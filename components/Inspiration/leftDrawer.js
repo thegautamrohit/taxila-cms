@@ -98,8 +98,6 @@ export default function DrawerLeft() {
     setOpen(false);
   };
 
-  console.log(category);
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />

@@ -4,6 +4,7 @@ import axios from "axios";
 
 const initialState = {
   category: [],
+  categoryData: [],
 };
 
 export const fetchCategory = createAsyncThunk(
@@ -14,15 +15,36 @@ export const fetchCategory = createAsyncThunk(
     return await response.data.result;
   }
 );
+export const fetchCategoryData = createAsyncThunk(
+  "fetchCategoryData",
+  async (data, thunkApi) => {
+    const response = await axios(`/api/inspiration`);
+
+    return await response.data.result;
+  }
+);
+
+export const deleteCategoryData = createAsyncThunk(
+  "fetchCategoryData",
+  async (id, thunkApi) => {
+    const response = await axios.delete(`/api/inspiration?id=${id}`);
+
+    return await response.data.result;
+  }
+);
 
 const inspirationSlice = createSlice({
   name: "fetchCategory",
   initialState,
 
   extraReducers: (builder) => {
-    builder.addCase(fetchCategory.fulfilled, (state, action) => {
-      state.category = action.payload;
-    });
+    builder
+      .addCase(fetchCategory.fulfilled, (state, action) => {
+        state.category = action.payload;
+      })
+      .addCase(fetchCategoryData.fulfilled, (state, action) => {
+        state.categoryData = action.payload;
+      });
   },
 });
 
