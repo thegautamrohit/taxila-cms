@@ -23,9 +23,12 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import CategoryIcon from "@mui/icons-material/Category";
 import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
-
+import Table from "../Inspiration/table";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategory } from "../../store/inspirationSlice";
+import {
+  fetchCategory,
+  fetchCategorySpecificData,
+} from "../../store/inspirationSlice";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -74,7 +77,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function DrawerLeft() {
-  const category = useSelector((state) => state);
+  const category = useSelector((state) => state.inspirationSlice.category);
   const dispatch = useDispatch();
   React.useEffect(() => {
     console.log("DrawerLeft");
@@ -84,7 +87,7 @@ export default function DrawerLeft() {
   const theme = useTheme();
   const [data, setData] = React.useState([]);
   const [open, setOpen] = React.useState(false);
-  const [openCategory, setOpenCategory] = React.useState(false);
+  const [openCategory, setOpenCategory] = React.useState(true);
 
   const handleClick = () => {
     setOpenCategory(!openCategory);
@@ -97,8 +100,6 @@ export default function DrawerLeft() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  console.log(category?.inspirationSLice?.category);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -141,12 +142,12 @@ export default function DrawerLeft() {
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
+        <DrawerHeader style={{ background: "#1976d2" }}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
+              <ChevronLeftIcon style={{ color: "white" }} />
             ) : (
-              <ChevronRightIcon />
+              <ChevronRightIcon style={{ color: "white" }} />
             )}
           </IconButton>
         </DrawerHeader>
@@ -161,22 +162,20 @@ export default function DrawerLeft() {
           </ListItemButton>
           <Collapse in={openCategory} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              {/* {category.inspirationSLice.category?.map((text, index) => (
-                <Link
-                  key={text.id}
-                  href={`/inspiration/${text.title}?id=${text.id}`}
-                  style={{ color: "Black", textDecoration: "none" }}
+              {category?.map((text, index) => (
+                <ListItem
+                  disablePadding
+                  key={index}
+                  onClick={() => dispatch(fetchCategorySpecificData(text.id))}
                 >
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <CircleIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={text.title} />
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
-              ))} */}
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <CircleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={text.title} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
             </List>
           </Collapse>
         </List>
@@ -184,6 +183,7 @@ export default function DrawerLeft() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
+        <Table />
       </Main>
     </Box>
   );

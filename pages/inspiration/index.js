@@ -8,6 +8,7 @@ import axios from "axios";
 import InspirationCategory from "../../components/Inspiration/InspirationCategory";
 import InspirationProduct from "../../components/Inspiration/InspirationProduct";
 import DrawerLeft from "../../components/Inspiration/leftDrawer";
+import Table from "../../components/Inspiration/table";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -54,28 +55,9 @@ function Index({ data, categoryData }) {
   };
 
   return (
-    <>
+    <div style={{ position: "relative" }}>
       <DrawerLeft />
-      <Box sx={{ width: "100%", marginTop: "75px" }}>
-        {/* <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-            centered
-          >
-            <Tab label="Category" {...a11yProps(0)} />
-            <Tab label="Product" {...a11yProps(1)} />
-          </Tabs>
-        </Box> */}
-        {/* <TabPanel value={value} index={0}>
-          <InspirationCategory data={categoryData} />
-        </TabPanel> */}
-        {/* <TabPanel value={value} index={1}>
-          <InspirationProduct data={data} categoryData={categoryData} />
-        </TabPanel> */}
-      </Box>
-    </>
+    </div>
   );
 }
 
