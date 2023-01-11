@@ -3,20 +3,38 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "GET":
       try {
-        const id = req.query.id;
+        const name = req.query.name;
         let sql = "";
-        if (id) {
+        if (name) {
           sql = `
-        SELECT * FROM media WHERE media.id = ${id}`;
+        SELECT * FROM media WHERE category = "${name}"`;
+          const valueParams = [];
+
+          const result = await query({ query: sql, value: valueParams });
+          if (result) {
+            res.status(200).json({ result: result });
+          }
         } else {
           sql = `
         SELECT category FROM media`;
-        }
-        const valueParams = [];
 
-        const result = await query({ query: sql, value: valueParams });
-        if (result) {
-          res.status(200).json({ result: result });
+          const valueParams = [];
+
+          const result = await query({ query: sql, value: valueParams });
+          if (result) {
+            let newArray = [];
+            let lookupObject = {};
+
+            for (var i in result) {
+              lookupObject[result[i]["category"]] = result[i];
+            }
+
+            for (i in lookupObject) {
+              newArray.push(lookupObject[i]);
+            }
+
+            res.status(200).json({ result: newArray });
+          }
         }
       } catch (error) {
         res.status(500).json({ error: error.message });
