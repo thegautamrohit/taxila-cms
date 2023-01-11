@@ -98,7 +98,7 @@ export default function DrawerLeft() {
     setOpen(false);
   };
 
-  console.log(category.inspirationSLice.category);
+  console.log(category?.inspirationSLice?.category);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -161,7 +161,7 @@ export default function DrawerLeft() {
           </ListItemButton>
           <Collapse in={openCategory} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              {category.inspirationSLice.category?.map((text, index) => (
+              {/* {category.inspirationSLice.category?.map((text, index) => (
                 <Link
                   key={text.id}
                   href={`/inspiration/${text.title}?id=${text.id}`}
@@ -176,7 +176,7 @@ export default function DrawerLeft() {
                     </ListItemButton>
                   </ListItem>
                 </Link>
-              ))}
+              ))} */}
             </List>
           </Collapse>
         </List>

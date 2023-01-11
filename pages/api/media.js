@@ -3,8 +3,20 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "GET":
       try {
-        const name = req.query.name;
         let sql = "";
+        const name = req.query.name;
+        const id = req.query.id;
+        if (id) {
+          sql = `
+          SELECT * FROM media WHERE id = ${id}`;
+          const valueParams = [];
+
+          const result = await query({ query: sql, value: valueParams });
+          if (result) {
+            res.status(200).json({ result: result });
+          }
+        }
+
         if (name) {
           sql = `
         SELECT * FROM media WHERE category = "${name}"`;
