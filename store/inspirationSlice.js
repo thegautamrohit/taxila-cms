@@ -1,32 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { AppState } from "./store";
-import { HYDRATE } from "next-redux-wrapper";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+import axios from "axios";
 
 const initialState = {
-  authState: false,
+  category: [],
 };
 
+export const fetchCategory = createAsyncThunk(
+  "fetchCategory",
+  async (data, thunkApi) => {
+    const response = await axios(`/api/inspirationCategory`);
+
+    return await response.data.result;
+  }
+);
+
 export const inspirationSlice = createSlice({
-  name: "auth",
+  name: "fetchCategory",
   initialState,
   reducers: {
-    setAuthState(state, action) {
-      state.inspirationSlice = action.payload;
-    },
-
-    extraReducers: {
-      [HYDRATE]: (state, action) => {
-        return {
-          ...state,
-          ...action.payload.auth,
-        };
-      },
+    extraReducers: (builder) => {
+      builder.addCase(fetchCategory.fulfilled, (state, action) => {
+        console.log(action, state);
+        state.category = action.payload;
+      });
     },
   },
 });
-
-export const { setAuthState } = inspirationSlice.actions;
-
-export const selectAuthState = (state) => state.auth.inspirationSlice;
 
 export default inspirationSlice.reducer;

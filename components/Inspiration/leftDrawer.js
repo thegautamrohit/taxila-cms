@@ -23,8 +23,9 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import CategoryIcon from "@mui/icons-material/Category";
 import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
-import { selectAuthState, setAuthState } from "../../store/inspirationSlice";
+
 import { useDispatch, useSelector } from "react-redux";
+import { fetchCategory } from "../../store/inspirationSlice";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -73,20 +74,15 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function DrawerLeft() {
-  const authState = useSelector(selectAuthState);
+  const authState = useSelector((state) => state);
   const dispatch = useDispatch();
   React.useEffect(() => {
-    const apiCall = async () => {
-      let category = await axios.get(`/api/inspirationCategory`);
-
-      console.log(category);
-    };
-
-    apiCall();
+    console.log("DrawerLeft");
+    dispatch(fetchCategory("test"));
   }, []);
 
   const theme = useTheme();
-  const [data, setData] = useState([]);
+  const [data, setData] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [openCategory, setOpenCategory] = React.useState(false);
 
@@ -102,7 +98,7 @@ export default function DrawerLeft() {
     setOpen(false);
   };
 
-  console.log(data);
+  console.log(authState);
 
   return (
     <Box sx={{ display: "flex" }}>

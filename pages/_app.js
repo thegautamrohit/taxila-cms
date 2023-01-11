@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-
+import { Provider } from "react-redux";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-import { wrapper } from "../store/store";
+import { wrapper, store } from "../store/store";
 
 const ButtonAppBar = () => {
   return (
@@ -27,10 +27,12 @@ const ButtonAppBar = () => {
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <ButtonAppBar />
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <ButtonAppBar />
+        <Component {...pageProps} />
+      </Provider>
     </>
   );
 }
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;
