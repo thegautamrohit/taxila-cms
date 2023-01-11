@@ -86,7 +86,7 @@ function home() {
       url: "/blogs",
     },
     {
-      id: 9,
+      id: 10,
       icon: (
         <VideoCameraFrontIcon
           style={{ color: "#1976d2", fontSize: "3.5rem !important" }}

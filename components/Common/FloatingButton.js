@@ -6,9 +6,9 @@ import AddIcon from "@mui/icons-material/Add";
 export default function FloatingActionButtons() {
   return (
     <Box sx={{ "& > :not(style)": { m: 1 } }}>
-      <Fab variant="extended">
-        {/* <AddIcon sx={{ mr: 1 }} /> */}
-        Categoryiuurewir
+      <Fab variant="extended" color="success">
+        <AddIcon sx={{ mr: 1 }} />
+        Add Category
       </Fab>
     </Box>
   );

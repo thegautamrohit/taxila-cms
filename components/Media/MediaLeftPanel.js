@@ -17,14 +17,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Link from "next/link";
-import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+
 import CategoryIcon from "@mui/icons-material/Category";
 import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import FloatingActionButtons from "../Common/FloatingBUtton";
+import MediaRightPanel from "./MediaRightPanel";
+import { getItems, getMediaCategory } from "../../store/mediaSlice";
 
 const drawerWidth = 240;
 
@@ -74,15 +74,16 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 function MediaLeftPanel() {
+  const dispatch = useDispatch();
+
+  const categories = useSelector((state) => state.mediaSlice.categories);
+
   const theme = useTheme();
-  const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media`)
-      .then((res) => setData(res.data.result));
+    dispatch(getMediaCategory());
   }, []);
 
   const handleClick = () => {
@@ -97,7 +98,7 @@ function MediaLeftPanel() {
     setOpen(false);
   };
 
-  console.log(data);
+  // console.log(categories);
 
   return (
     <div>
@@ -128,6 +129,7 @@ function MediaLeftPanel() {
             </Typography>
           </Toolbar>
         </AppBar>
+
         <Drawer
           sx={{
             width: drawerWidth,
@@ -157,34 +159,34 @@ function MediaLeftPanel() {
                 <CategoryIcon />
               </ListItemIcon>
               <ListItemText primary="All Categories" />
-              {/* {openCategory ? <ExpandLess /> : <ExpandMore />} */}
             </ListItemButton>
-            {/* <Collapse in={openCategory} timeout="auto" unmountOnExit> */}
             <List component="div" disablePadding>
-              {data.map((text, index) => (
-                <Link
+              {categories?.map((text, index) => (
+                <div
                   key={text.id}
-                  href={`/media/${text.title}?id=${text.id}`}
                   style={{ color: "Black", textDecoration: "none" }}
+                  onClick={() => {
+                    setOpen(false);
+                    dispatch(getItems(text.category));
+                  }}
                 >
                   <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>
                         <CircleIcon />
                       </ListItemIcon>
-                      <ListItemText primary={text.link} />
+                      <ListItemText primary={text.category} />
                     </ListItemButton>
                   </ListItem>
-                </Link>
+                </div>
               ))}
             </List>
-            {/* </Collapse> */}
           </List>
-          <Divider />
           <FloatingActionButtons />
         </Drawer>
         <Main open={open}>
           <DrawerHeader />
+          <MediaRightPanel />
         </Main>
       </Box>
     </div>

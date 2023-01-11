@@ -1,17 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   categories: [],
-  items: [
-    {
-      id: 1,
-      title: "test1",
-    },
-    {
-      id: 2,
-      title: "test2",
-    },
-  ],
+  items: [],
   loading: false,
 };
 
@@ -26,9 +18,31 @@ export const getMediaCategory = createAsyncThunk(
 );
 
 export const getItems = createAsyncThunk("getItems", async (data, thunkAPI) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_CUSTOM}/api/media?name=${data}`
+  );
 
   return await response.json();
+});
+
+export const addItem = createAsyncThunk("addItem", async (data, thunkAPI) => {
+  console.log(data);
+
+  const response = await axios
+    .post(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media`, {
+      category: data.category,
+      data: data?.date,
+      edition: data?.edition,
+      link: data?.link,
+      images: data?.preview,
+      website: data?.website,
+      Name: data?.title,
+    })
+    .then(() => {
+      data.success();
+    });
+
+  return response;
 });
 
 const mediaSlice = createSlice({
@@ -36,10 +50,14 @@ const mediaSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(getMediaCategory.fulfilled, (state, action) => {
-      state.categories = action.payload;
+      state.categories = action.payload.result;
     });
-    addCase(getItems.fulfilled, (state, action) => {
-      state.items = action.payload;
+    builder.addCase(getItems.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(getItems.fulfilled, (state, action) => {
+      state.items = action.payload.result;
+      state.loading = false;
     });
   },
 });
