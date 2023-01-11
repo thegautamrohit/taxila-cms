@@ -87,7 +87,9 @@ export default function CustomizedTables() {
                 <UpgradeIcon />
               </StyledTableCell>
               <StyledTableCell align="center">
-                <DeleteIcon onClick={() => deleteCategoryData(row.id)} />
+                <DeleteIcon
+                  onClick={() => dispatch(deleteCategoryData(row.id))}
+                />
               </StyledTableCell>
             </StyledTableRow>
           ))}

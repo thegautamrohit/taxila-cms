@@ -5,6 +5,8 @@ import axios from "axios";
 const initialState = {
   category: [],
   categoryData: [],
+  error: "",
+  success: "",
 };
 
 export const fetchCategory = createAsyncThunk(
@@ -25,11 +27,15 @@ export const fetchCategoryData = createAsyncThunk(
 );
 
 export const deleteCategoryData = createAsyncThunk(
-  "fetchCategoryData",
+  "deleteCategoryData",
   async (id, thunkApi) => {
-    const response = await axios.delete(`/api/inspiration?id=${id}`);
-
-    return await response.data.result;
+    try {
+      const response = await axios.delete(`/api/inspiration?id=${id}`);
+      thunkApi.dispatch(fetchCategoryData());
+      return await response.data.result;
+    } catch (error) {
+      return await response.data.result;
+    }
   }
 );
 
@@ -44,6 +50,9 @@ const inspirationSlice = createSlice({
       })
       .addCase(fetchCategoryData.fulfilled, (state, action) => {
         state.categoryData = action.payload;
+      })
+      .addCase(deleteCategoryData.fulfilled, (state, action) => {
+        state.success = action.payload;
       });
   },
 });

@@ -11,7 +11,7 @@ export default async function handler(req, res) {
           SELECT * FROM inspirationData LEFT JOIN inspirationDetails ON inspirationData.detail_id = inspirationDetails.id WHERE category_id = ${category}`;
         } else {
           sql = `
-          SELECT * FROM inspirationData LEFT JOIN inspirationDetails ON inspirationData.detail_id = inspirationDetails.id`;
+          SELECT inspirationData.id , inspirationData.primary_image , inspirationData.category_id ,inspirationData.title ,inspirationData.description ,inspirationDetails.image  FROM inspirationData LEFT JOIN inspirationDetails ON inspirationData.detail_id = inspirationDetails.id`;
         }
 
         const valueParams = [];
