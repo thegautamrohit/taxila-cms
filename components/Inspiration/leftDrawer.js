@@ -28,6 +28,7 @@ import Table from "../Inspiration/table";
 import { useDispatch, useSelector } from "react-redux";
 import ModalAddCategory from "./addCategoryModal";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
+import UpdateCategoryModal from "./updateCategoryModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   fetchCategory,
@@ -90,11 +91,12 @@ export default function DrawerLeft() {
   }, []);
 
   const theme = useTheme();
-  const [data, setData] = React.useState([]);
+  const [id, setId] = React.useState("");
+  const [title, setTitle] = useState("");
   const [open, setOpen] = React.useState(false);
   const [openCategory, setOpenCategory] = React.useState(true);
   const [openCategoryModal, setOpenCategoryModal] = React.useState(false);
-
+  const [updateCategoryModal, setUpdateCategoryModal] = React.useState(false);
   const handleClick = () => {
     setOpenCategory(!openCategory);
   };
@@ -105,6 +107,12 @@ export default function DrawerLeft() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const updateCategory = (id, title) => {
+    setId(id);
+    setTitle(title);
+    setUpdateCategoryModal(true);
   };
 
   return (
@@ -182,7 +190,9 @@ export default function DrawerLeft() {
                     />
 
                     <ListItemIcon>
-                      <UpgradeIcon />
+                      <UpgradeIcon
+                        onClick={() => updateCategory(text.id, text.title)}
+                      />
                     </ListItemIcon>
                     <ListItemIcon>
                       <DeleteIcon
@@ -210,6 +220,12 @@ export default function DrawerLeft() {
       <ModalAddCategory
         open={openCategoryModal}
         close={() => setOpenCategoryModal(false)}
+      />
+      <UpdateCategoryModal
+        id={id}
+        title={title}
+        open={updateCategoryModal}
+        close={() => setUpdateCategoryModal(false)}
       />
     </Box>
   );

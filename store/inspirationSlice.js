@@ -68,6 +68,20 @@ export const deleteCategory = createAsyncThunk(
   }
 );
 
+export const updateCategory = createAsyncThunk(
+  "updateCategory",
+  async (data, thunkApi) => {
+    const response = await axios.patch(
+      `/api/inspirationCategory?id=${data.id}`,
+      {
+        title: data.category,
+      }
+    );
+    thunkApi.dispatch(fetchCategory());
+    return await response.data.result;
+  }
+);
+
 const inspirationSlice = createSlice({
   name: "fetchCategory",
   initialState,
@@ -76,6 +90,8 @@ const inspirationSlice = createSlice({
     builder
       .addCase(fetchCategory.pending, (state, action) => {
         state.loading = true;
+        state.success = "";
+        state.error = "";
       })
       .addCase(fetchCategory.fulfilled, (state, action) => {
         state.category = action.payload;
@@ -120,6 +136,17 @@ const inspirationSlice = createSlice({
         state.loading = false;
       })
       .addCase(deleteCategory.rejected, (state, action) => {
+        state.error = "Something went wrong";
+        state.loading = false;
+      })
+      .addCase(updateCategory.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(updateCategory.fulfilled, (state, action) => {
+        state.success = "Category updated Successfully";
+        state.loading = false;
+      })
+      .addCase(updateCategory.rejected, (state, action) => {
         state.error = "Something went wrong";
         state.loading = false;
       })

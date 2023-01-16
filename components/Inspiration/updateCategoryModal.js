@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
-import { addCategory } from "../../store/inspirationSlice";
+import { updateCategory } from "../../store/inspirationSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Loader from "../Common/Loader";
@@ -23,13 +23,17 @@ const style = {
   flexDirection: "column",
 };
 
-export default function BasicModal({ open, close }) {
+export default function UpdateCategoryModal({ open, close, id, title }) {
   const dispatch = useDispatch();
+  useEffect(() => {
+    setCategory(title);
+  }, [title, id]);
 
   const [category, setCategory] = useState("");
 
   const submitHandler = () => {
-    dispatch(addCategory(category));
+    const data = { id, category };
+    dispatch(updateCategory(data));
     setCategory("");
     close();
   };
@@ -55,7 +59,7 @@ export default function BasicModal({ open, close }) {
             component="label"
             onClick={() => submitHandler()}
           >
-            Submit
+            Update
           </Button>
         </Box>
       </Modal>
