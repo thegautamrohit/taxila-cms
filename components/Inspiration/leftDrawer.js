@@ -35,6 +35,7 @@ import {
   fetchCategorySpecificData,
   deleteCategory,
 } from "../../store/inspirationSlice";
+import AddInspirationProductModal from "./addProduct";
 const drawerWidth = 340;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -97,6 +98,7 @@ export default function DrawerLeft() {
   const [openCategory, setOpenCategory] = React.useState(true);
   const [openCategoryModal, setOpenCategoryModal] = React.useState(false);
   const [updateCategoryModal, setUpdateCategoryModal] = React.useState(false);
+  const [addProductModal, setAddProductModal] = React.useState(false);
   const handleClick = () => {
     setOpenCategory(!openCategory);
   };
@@ -210,7 +212,11 @@ export default function DrawerLeft() {
       <Main open={open}>
         <DrawerHeader />
         <Table />
-        <FloatingButton name="Add Product" bottom={50} />
+        <FloatingButton
+          name="Add Product"
+          bottom={50}
+          open={() => setAddProductModal(true)}
+        />
         <FloatingButton
           name="Add Category"
           bottom={120}
@@ -226,6 +232,11 @@ export default function DrawerLeft() {
         title={title}
         open={updateCategoryModal}
         close={() => setUpdateCategoryModal(false)}
+      />
+      <AddInspirationProductModal
+        open={addProductModal}
+        close={() => setAddProductModal(false)}
+        methodType="create"
       />
     </Box>
   );
