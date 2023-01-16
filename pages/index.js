@@ -6,16 +6,3 @@ function index() {
 }
 
 export default index;
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ params }) => {
-      // await store.dispatch(setAuthState(false));
-      console.log("State on server", store.getState());
-      return {
-        props: {
-          authState: false,
-        },
-      };
-    }
-);

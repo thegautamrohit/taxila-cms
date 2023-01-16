@@ -3,13 +3,21 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 
-export default function FloatingActionButtons() {
+export default function FloatingActionButtons({ name, bottom, open }) {
   return (
-    <Box sx={{ "& > :not(style)": { m: 1 } }}>
-      <Fab variant="extended" color="success">
-        <AddIcon sx={{ mr: 1 }} />
-        Add Category
-      </Fab>
-    </Box>
+    <Fab
+      onClick={() => open()}
+      variant="extended"
+      style={{
+        position: "fixed",
+        right: 50,
+        bottom: bottom,
+        color: "white",
+        backgroundColor: "#1976d2",
+      }}
+    >
+      <AddIcon sx={{ mr: 1 }} />
+      {name}
+    </Fab>
   );
 }

@@ -16,6 +16,7 @@ import ImageIcon from "@mui/icons-material/Image";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BurstModeIcon from "@mui/icons-material/BurstMode";
+import Loader from "../Common/Loader";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#1976d2",
@@ -36,29 +37,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 export default function CustomizedTables() {
   const dispatch = useDispatch();
-  const categoryData = useSelector(
-    (state) => state.inspirationSlice.categoryData
-  );
+  const categoryData = useSelector((state) => state.inspirationSlice);
+
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     dispatch(fetchCategoryData());
   }, []);
 
+  console.log(categoryData);
+
   return (
     <TableContainer component={Paper}>
+      {categoryData.loading && <Loader />}
+
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -72,7 +65,7 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {categoryData?.map((row) => (
+          {categoryData?.categoryData?.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
                 {row.id}

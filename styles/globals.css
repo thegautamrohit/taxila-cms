@@ -97,11 +97,17 @@
   width: 100%;
   background-color: #1976d2;
   z-index: 2000;
-
 }
 
 .product__layout__home__left__drawer__item > p:hover {
   background-color: #1976d2;
   cursor: pointer;
   color: white;
+}
+
+.css-cpgvjg-MuiSnackbar-root {
+  left: 0 !important;
+  right: 0 !important;
+  width: 30% !important;
+  margin: auto;
 }

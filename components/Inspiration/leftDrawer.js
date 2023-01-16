@@ -23,13 +23,18 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import CategoryIcon from "@mui/icons-material/Category";
 import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
+import FloatingButton from "../Common/FloatingButton";
 import Table from "../Inspiration/table";
 import { useDispatch, useSelector } from "react-redux";
+import ModalAddCategory from "./addCategoryModal";
+import UpgradeIcon from "@mui/icons-material/Upgrade";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   fetchCategory,
   fetchCategorySpecificData,
+  deleteCategory,
 } from "../../store/inspirationSlice";
-const drawerWidth = 240;
+const drawerWidth = 340;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -88,6 +93,7 @@ export default function DrawerLeft() {
   const [data, setData] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [openCategory, setOpenCategory] = React.useState(true);
+  const [openCategoryModal, setOpenCategoryModal] = React.useState(false);
 
   const handleClick = () => {
     setOpenCategory(!openCategory);
@@ -163,16 +169,26 @@ export default function DrawerLeft() {
           <Collapse in={openCategory} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {category?.map((text, index) => (
-                <ListItem
-                  disablePadding
-                  key={index}
-                  onClick={() => dispatch(fetchCategorySpecificData(text.id))}
-                >
+                <ListItem disablePadding key={index}>
                   <ListItemButton>
                     <ListItemIcon>
                       <CircleIcon />
                     </ListItemIcon>
-                    <ListItemText primary={text.title} />
+                    <ListItemText
+                      primary={text.title}
+                      onClick={() =>
+                        dispatch(fetchCategorySpecificData(text.id))
+                      }
+                    />
+
+                    <ListItemIcon>
+                      <UpgradeIcon />
+                    </ListItemIcon>
+                    <ListItemIcon>
+                      <DeleteIcon
+                        onClick={() => dispatch(deleteCategory(text.id))}
+                      />
+                    </ListItemIcon>
                   </ListItemButton>
                 </ListItem>
               ))}
@@ -184,7 +200,17 @@ export default function DrawerLeft() {
       <Main open={open}>
         <DrawerHeader />
         <Table />
+        <FloatingButton name="Add Product" bottom={50} />
+        <FloatingButton
+          name="Add Category"
+          bottom={120}
+          open={() => setOpenCategoryModal(true)}
+        />
       </Main>
+      <ModalAddCategory
+        open={openCategoryModal}
+        close={() => setOpenCategoryModal(false)}
+      />
     </Box>
   );
 }

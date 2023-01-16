@@ -2,6 +2,8 @@ import * as React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import loader from "../../image/Pulse.gif";
+import Image from "next/image";
 
 export default function Loader() {
   return (
@@ -15,7 +17,7 @@ export default function Loader() {
     >
       <Grid item xs={3}>
         <Box sx={{ display: "flex" }}>
-          <CircularProgress />
+          <Image src={loader} alt="Loader"  />
         </Box>
       </Grid>
     </Grid>
