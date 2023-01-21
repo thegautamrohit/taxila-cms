@@ -47,8 +47,6 @@ export const addItem = createAsyncThunk("addItem", async (data, thunkAPI) => {
 export const getActiveItem = createAsyncThunk(
   "getActiveItem",
   async (data, thunkAPI) => {
-    console.log(data);
-
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_CUSTOM}/api/media?id=${data}`
     );
@@ -60,8 +58,6 @@ export const getActiveItem = createAsyncThunk(
 export const updateItem = createAsyncThunk(
   "updateItem",
   async (data, thunkAPI) => {
-    console.log(data);
-
     const response = await axios
       .patch(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media?id=${data.id}`, {
         category: data.category,
@@ -95,7 +91,6 @@ const mediaSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getActiveItem.fulfilled, (state, action) => {
-      console.log(action);
       state.activeItem = action.payload.data.result;
     });
   },

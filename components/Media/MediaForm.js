@@ -62,8 +62,6 @@ function MediaForm({ activeItem }) {
   };
 
   const submitHandler = () => {
-    console.log(title, category, website, date, edition, link, preview);
-
     if (
       title?.trim().length > 0 &&
       category?.trim().length > 0 &&
@@ -112,7 +110,6 @@ function MediaForm({ activeItem }) {
     reader.readAsDataURL(e);
 
     reader.onload = () => {
-      console.log("called: ", reader);
       setPreview(reader.result);
     };
     e = "";

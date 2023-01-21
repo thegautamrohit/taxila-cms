@@ -37,12 +37,9 @@ function MediaRightPanel() {
   };
 
   const modalHandler = (id) => {
-    console.log(id);
     setOpen2(true);
     dispatch(getActiveItem(id));
   };
-
-  console.log(activeItem);
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 952 }}>

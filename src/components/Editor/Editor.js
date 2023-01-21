@@ -13,7 +13,6 @@ const TextEditor = () => {
 
   const [convertedContent, setConvertedContent] = useState(null);
 
-  console.log(convertedContent);
 
   const handleEditorChange = (state) => {
     setEditorState(state);
