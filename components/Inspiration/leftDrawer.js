@@ -87,7 +87,6 @@ export default function DrawerLeft() {
   const category = useSelector((state) => state.inspirationSlice.category);
   const dispatch = useDispatch();
   React.useEffect(() => {
-    console.log("DrawerLeft");
     dispatch(fetchCategory("test"));
   }, []);
 

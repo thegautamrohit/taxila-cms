@@ -30,7 +30,6 @@ function InspirationCategory({ data }) {
 
   const deleteHandler = () => {};
   const submitHandler = () => {
-    console.log(category);
     axios
       .post(
         `${process.env.NEXT_PUBLIC_CUSTOM}/api/inspirationCategory`,

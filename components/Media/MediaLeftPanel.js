@@ -163,7 +163,7 @@ function MediaLeftPanel() {
             <List component="div" disablePadding>
               {categories?.map((text, index) => (
                 <div
-                  key={text.id}
+                  key={index}
                   style={{ color: "Black", textDecoration: "none" }}
                   onClick={() => {
                     setOpen(false);

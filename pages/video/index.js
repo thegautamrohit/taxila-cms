@@ -30,7 +30,6 @@ function Index({ data }) {
           `${process.env.NEXT_PUBLIC_CUSTOM}/api/video?id=${router.query?.id}`
         )
         .then((res) => {
-          console.log(res.data.result[0]);
           setCategory(res.data.result[0]?.category);
           setLink(res.data.result[0]?.link);
           setTitle(res.data.result[0]?.title);

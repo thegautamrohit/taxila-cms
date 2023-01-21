@@ -27,13 +27,11 @@ function Index({ data }) {
   const router = useRouter();
 
   const convertToBase64 = (e) => {
-    console.log(e.target.files[0]);
     const reader = new FileReader();
 
     reader.readAsDataURL(e.target.files[0]);
 
     reader.onload = () => {
-      console.log("called: ", reader);
       setPreview(reader.result);
     };
   };
@@ -45,7 +43,6 @@ function Index({ data }) {
           `${process.env.NEXT_PUBLIC_CUSTOM}/api/media?id=${router.query?.id}`
         )
         .then((res) => {
-          console.log(res.data.result[0]);
           setCategory(res.data.result[0]?.category);
           setWebsite(res.data.result[0]?.website);
           setDate(res.data.result[0]?.date);
@@ -89,8 +86,6 @@ function Index({ data }) {
   };
 
   const submitHandler = () => {
-    console.log(category, website, date, edition, link, preview);
-
     if (
       category.trim().length > 0 &&
       website.trim().length &&

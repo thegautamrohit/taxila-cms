@@ -81,8 +81,6 @@ function AddInspirationProductModal({
     };
   };
 
-  console.log(images);
-
   const imageHandler = (files) => {
     // const images = Array.prototype.slice.call(files);
 
@@ -108,7 +106,6 @@ function AddInspirationProductModal({
               hidden
               onChange={(e) => {
                 setPrimaryImage(e.target.files[0]);
-                console.log(e);
               }}
             />
           </Button>

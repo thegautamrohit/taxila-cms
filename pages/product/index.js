@@ -65,7 +65,6 @@ function Index({ data }) {
           `${process.env.NEXT_PUBLIC_CUSTOM}/api/product?id=${router.query.id}`
         )
         .then((res) => {
-          console.log(res.data.result[0]);
           setAbrasion(res.data.result[0]?.abrasion_strength);
           setApparent(res.data.result[0]?.apparent_density);
           setCare(res.data.result[0]?.care_instruction);

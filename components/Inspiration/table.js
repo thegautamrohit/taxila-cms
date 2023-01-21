@@ -46,7 +46,6 @@ export default function CustomizedTables() {
     dispatch(fetchCategoryData());
   }, []);
 
-  console.log(categoryData);
 
   return (
     <TableContainer component={Paper}>
