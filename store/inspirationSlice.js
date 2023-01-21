@@ -82,6 +82,30 @@ export const updateCategory = createAsyncThunk(
   }
 );
 
+export const uploadImageToWordpress = createAsyncThunk(
+  "uploadImageToWordpress",
+  async (image, thunkApi) => {
+    axios({
+      url: "http://wordpress.taxilastone.com/wp-json/wp/v2/media",
+      method: "POST",
+
+      headers: {
+        Authorization: "Basic " + window.btoa("admin:jSca rbd0 mXv5 a9XC x5g7 BrjG"),
+        "Content-Type": "image/jpeg",
+      },
+      data: image,
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    thunkApi.dispatch(fetchCategory());
+    return await response.data.result;
+  }
+);
+
 const inspirationSlice = createSlice({
   name: "fetchCategory",
   initialState,

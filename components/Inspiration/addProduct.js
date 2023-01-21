@@ -13,7 +13,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Modal from "@mui/material/Modal";
-
+import { uploadImageToWordpress } from "../../store/inspirationSlice";
+import { useDispatch } from "react-redux";
 const style = {
   position: "absolute",
   top: "50%",
@@ -38,6 +39,8 @@ function AddInspirationProductModal({
   close,
 }) {
   const router = useRouter();
+
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [openProduct, setOpen] = useState(false);
@@ -81,10 +84,16 @@ function AddInspirationProductModal({
   console.log(images);
 
   const imageHandler = (files) => {
-    const images = Array.prototype.slice.call(files);
+    // const images = Array.prototype.slice.call(files);
 
-    // images.map((i) => setImages(...images, convertToBase64(i)));
-    images.map((i) => console.log(convertToBase64(i)));
+    // // images.map((i) => setImages(...images, convertToBase64(i)));
+    // images.map((i) => console.log(convertToBase64(i)));
+
+    console.log(files);
+
+    const formData = new FormData();
+    formData.append("image", files[0]);
+    dispatch(uploadImageToWordpress(formData));
   };
 
   return (

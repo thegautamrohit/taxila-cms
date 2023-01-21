@@ -43,7 +43,7 @@ export default function UpdateCategoryModal({ open, close, id, title }) {
       <Modal open={open} onClose={() => close()}>
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h5">
-            Add Category
+            Update Category
           </Typography>
           <TextField
             id="outlined-multiline-flexible"
