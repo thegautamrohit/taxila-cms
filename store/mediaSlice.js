@@ -5,6 +5,7 @@ const initialState = {
   categories: [],
   items: [],
   loading: false,
+  activeItem: [],
 };
 
 export const getMediaCategory = createAsyncThunk(
@@ -26,8 +27,6 @@ export const getItems = createAsyncThunk("getItems", async (data, thunkAPI) => {
 });
 
 export const addItem = createAsyncThunk("addItem", async (data, thunkAPI) => {
-  console.log(data);
-
   const response = await axios
     .post(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media`, {
       category: data.category,
@@ -36,7 +35,7 @@ export const addItem = createAsyncThunk("addItem", async (data, thunkAPI) => {
       link: data?.link,
       images: data?.preview,
       website: data?.website,
-      Name: data?.title,
+      name: data?.title,
     })
     .then(() => {
       data.success();
@@ -44,6 +43,42 @@ export const addItem = createAsyncThunk("addItem", async (data, thunkAPI) => {
 
   return response;
 });
+
+export const getActiveItem = createAsyncThunk(
+  "getActiveItem",
+  async (data, thunkAPI) => {
+    console.log(data);
+
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_CUSTOM}/api/media?id=${data}`
+    );
+
+    return response;
+  }
+);
+
+export const updateItem = createAsyncThunk(
+  "updateItem",
+  async (data, thunkAPI) => {
+    console.log(data);
+
+    const response = await axios
+      .patch(`${process.env.NEXT_PUBLIC_CUSTOM}/api/media?id=${data.id}`, {
+        category: data.category,
+        data: data?.date,
+        edition: data?.edition,
+        link: data?.link,
+        images: data?.preview,
+        website: data?.website,
+        name: data?.title,
+      })
+      .then(() => {
+        data.success();
+      });
+
+    return response;
+  }
+);
 
 const mediaSlice = createSlice({
   name: "mediaSlice",
@@ -58,6 +93,10 @@ const mediaSlice = createSlice({
     builder.addCase(getItems.fulfilled, (state, action) => {
       state.items = action.payload.result;
       state.loading = false;
+    });
+    builder.addCase(getActiveItem.fulfilled, (state, action) => {
+      console.log(action);
+      state.activeItem = action.payload.data.result;
     });
   },
 });

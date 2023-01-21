@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AttachmentIcon from "@mui/icons-material/Attachment";
@@ -12,16 +12,17 @@ import { useDispatch, useSelector } from "react-redux";
 import Alert from "../Common/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Image from "next/image";
-import { addItem } from "../../store/mediaSlice";
+import { addItem, updateItem } from "../../store/mediaSlice";
 
-function MediaForm() {
-  const [image, setImage] = useState();
-  const [category, setCategory] = useState("");
-  const [website, setWebsite] = useState("");
-  const [date, setDate] = useState("");
-  const [edition, setEdition] = useState("");
-  const [link, setLink] = useState("");
-  const [title, setTitle] = useState("");
+function MediaForm({ activeItem }) {
+  const [image, setImage] = useState(activeItem?.images ?? "");
+  const [category, setCategory] = useState(activeItem?.category ?? "");
+  const [website, setWebsite] = useState(activeItem?.website ?? "");
+  const [date, setDate] = useState(activeItem?.date ?? "");
+  const [edition, setEdition] = useState(activeItem?.edition ?? "");
+  const [link, setLink] = useState(activeItem?.link ?? "");
+  const [title, setTitle] = useState(activeItem?.Name ?? "");
+  const [id, setId] = useState("");
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [error, setError] = useState(false);
@@ -30,6 +31,17 @@ function MediaForm() {
   const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.mediaSlice.categories);
+
+  useEffect(() => {
+    setImage(activeItem?.images ?? "");
+    setCategory(activeItem?.category ?? "");
+    setWebsite(activeItem?.website ?? "");
+    setDate(activeItem?.date ?? "");
+    setEdition(activeItem?.edition ?? "");
+    setLink(activeItem?.link ?? "");
+    setTitle(activeItem?.Name ?? "");
+    setId(activeItem?.id ?? "");
+  }, [activeItem]);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -50,27 +62,45 @@ function MediaForm() {
   };
 
   const submitHandler = () => {
-    if (
-      title.trim().length > 0 &&
-      category.trim().length > 0 &&
-      website.trim().length &&
-      date.trim().length &&
-      edition.trim().length &&
-      link.trim().length &&
-      preview.trim().length
-    ) {
-      let data = {
-        title,
-        category,
-        website,
-        date,
-        edition,
-        link,
-        preview,
-        success: successMsg,
-      };
+    console.log(title, category, website, date, edition, link, preview);
 
-      dispatch(addItem(data));
+    if (
+      title?.trim().length > 0 &&
+      category?.trim().length > 0 &&
+      website?.trim().length &&
+      date?.trim().length &&
+      edition?.trim().length &&
+      link?.trim().length &&
+      preview?.trim().length
+    ) {
+      if (id) {
+        let data = {
+          title,
+          category,
+          website,
+          date,
+          edition,
+          link,
+          preview,
+          id,
+          success: successMsg,
+        };
+
+        dispatch(updateItem(data));
+      } else {
+        let data = {
+          title,
+          category,
+          website,
+          date,
+          edition,
+          link,
+          preview,
+          success: successMsg,
+        };
+
+        dispatch(addItem(data));
+      }
     } else {
       errorMsg();
     }
@@ -90,7 +120,6 @@ function MediaForm() {
 
   const style = {
     bgcolor: "background.paper",
-
     p: 4,
     display: "flex",
     alignItems: "flex-start",
@@ -144,8 +173,8 @@ function MediaForm() {
               label="Category"
               onChange={(e) => setCategory(e.target.value)}
             >
-              {categories?.map((category) => (
-                <MenuItem value={category?.category}>
+              {categories?.map((category, index) => (
+                <MenuItem key={index} value={category?.category}>
                   {" "}
                   {category?.category}{" "}
                 </MenuItem>
